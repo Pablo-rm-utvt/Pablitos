@@ -93,22 +93,25 @@ const style = StyleSheet.create({
         marginHorizontal: 10,
         padding: 15,
         minHeight: 180,
-        width: 190,
+        width: '95%',
         marginBottom: 25,
         borderRadius: 20,
         backgroundColor: "#93b5caff",
-        flexDirection: 'row'
+        flexDirection: 'column'
     },
     contentContainer: {
-        flex: 2,
-        justifyContent: 'space-between'
+        flex: 1,
+        justifyContent: 'space-between',
+        marginBottom: 15
     },
     imageContainer: {
-        flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
         gap: 10,
-        marginLeft: 10
+        paddingTop: 10,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(255,255,255,0.3)'
     },
     title: {
         color: "white",

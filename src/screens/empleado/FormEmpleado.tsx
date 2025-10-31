@@ -60,7 +60,7 @@ export const FormEmpleado = ({ navigation, route }: Props) => {
           <TextInput style={styles.input} placeholder='RFC' value={state.rfc} onChangeText={(v) => handleInputChange('rfc', v)} />
 
           <Text style={styles.label}>NSS</Text>
-          <TextInput style={styles.input} placeholder='NSS' value={state.nss} onChangeText={(v) => handleInputChange('nss', v)} />
+          <TextInput style={styles.input} placeholder='NSS' value={state.nss} onChangeText={(v) => handleInputChange('nss', v)} keyboardType='number-pad' />
 
           <Text style={styles.label}>Fecha de nacimiento</Text>
           <TextInput style={styles.input} placeholder='YYYY-MM-DD' value={state.fecha_nacimiento} onChangeText={(v) => handleInputChange('fecha_nacimiento', v)} />

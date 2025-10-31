@@ -13,7 +13,7 @@ interface Props {
 export const FormExample = ({ navigation, route }: Props) => {
 
     const { form, handleInputChange } = useFormE();
-    const { createExample, updateExample } = useExampleApi();
+    const { createExample, updateExample, deleteExample } = useExampleApi();
     const { pickImage } = useImagePicker();
 
     useEffect(() => {
@@ -117,6 +117,17 @@ export const FormExample = ({ navigation, route }: Props) => {
                                 navigation.popToTop();
                             }}
                         />
+
+                        {form.id_example !== 0 && (
+                            <BtnTouch
+                                titulo='Eliminar'
+                                color='#ff4444'
+                                action={async () => {
+                                    await deleteExample(form);
+                                    navigation.popToTop();
+                                }}
+                            />
+                        )}
 
                         <BtnTouch
                             titulo='Regresar'

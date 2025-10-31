@@ -6,21 +6,31 @@ import {
     updateEmpleado as apiUpdateEmpleado,
     deleteEmpleado as apiDeleteEmpleado,
 } from '../api/empleadosApi';
+import { Empleado, EmpleadoCreate, EmpleadoUpdate, EmpleadoResponse } from '../interfaces/empleadoInterfaces';
+
+interface ApiResponse<T> {
+    success: boolean;
+    data?: T;
+    error?: string;
+}
 
 export const useEmpleadosApi = () => {
-    const [empleados, setEmpleados] = useState<any[]>([]);
+    const [empleados, setEmpleados] = useState<Empleado[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchAll = async () => {
+    const fetchAll = async (): Promise<ApiResponse<Empleado[]>> => {
         setLoading(true);
         try {
             const data = await getEmpleados();
             setEmpleados(data || []);
             setError(null);
+            return { success: true, data };
         } catch (err: any) {
-            console.error('fetchAll empleados error', err?.response?.data || err.message || err);
-            setError(err?.message || 'Error fetching empleados');
+            const errorMessage = err?.response?.data?.message || err.message || 'Error al cargar empleados';
+            console.error('fetchAll empleados error:', errorMessage);
+            setError(errorMessage);
+            return { success: false, error: errorMessage };
         } finally {
             setLoading(false);
         }
@@ -30,61 +40,68 @@ export const useEmpleadosApi = () => {
         fetchAll();
     }, []);
 
-    const create = async (payload: any) => {
+    const create = async (payload: EmpleadoCreate): Promise<ApiResponse<EmpleadoResponse>> => {
         setLoading(true);
         try {
             const res = await apiCreateEmpleado(payload);
             await fetchAll();
-            return res;
+            setError(null);
+            return { success: true, data: res };
         } catch (err: any) {
-            console.error('create empleado error', err?.response?.data || err.message || err);
-            setError(err?.message || 'Error creating empleado');
-            throw err;
+            const errorMessage = err?.response?.data?.message || err.message || 'Error al crear empleado';
+            console.error('create empleado error:', errorMessage);
+            setError(errorMessage);
+            return { success: false, error: errorMessage };
         } finally {
             setLoading(false);
         }
     };
 
-    const update = async (id: number, payload: any) => {
+    const update = async (id: number, payload: EmpleadoUpdate): Promise<ApiResponse<EmpleadoResponse>> => {
         setLoading(true);
         try {
             const res = await apiUpdateEmpleado(id, payload);
             await fetchAll();
-            return res;
+            setError(null);
+            return { success: true, data: res };
         } catch (err: any) {
-            console.error('update empleado error', err?.response?.data || err.message || err);
-            setError(err?.message || 'Error updating empleado');
-            throw err;
+            const errorMessage = err?.response?.data?.message || err.message || 'Error al actualizar empleado';
+            console.error('update empleado error:', errorMessage);
+            setError(errorMessage);
+            return { success: false, error: errorMessage };
         } finally {
             setLoading(false);
         }
     };
 
-    const find = async (id: number) => {
+    const find = async (id: number): Promise<ApiResponse<EmpleadoResponse>> => {
         setLoading(true);
         try {
             const res = await getEmpleado(id);
             setError(null);
-            return res;
+            return { success: true, data: res };
         } catch (err: any) {
-            console.error('find empleado error', err?.response?.data || err.message || err);
-            setError(err?.message || 'Error fetching empleado');
-            return null;
+            const errorMessage = err?.response?.data?.message || err.message || 'Error al buscar empleado';
+            console.error('find empleado error:', errorMessage);
+            setError(errorMessage);
+            return { success: false, error: errorMessage };
         } finally {
             setLoading(false);
         }
     };
 
-    const remove = async (id: number) => {
+    const remove = async (id: number): Promise<ApiResponse<void>> => {
         setLoading(true);
         try {
-            const res = await apiDeleteEmpleado(id);
+            await apiDeleteEmpleado(id);
             await fetchAll();
-            return res;
+            setError(null);
+            return { success: true };
         } catch (err: any) {
-            console.error('delete empleado error', err?.response?.data || err.message || err);
-            setError(err?.message || 'Error deleting empleado');
-            throw err;
+            const errorMessage = err?.response?.data?.message || err.message || 'Error al eliminar empleado';
+            console.error('delete empleado error:', errorMessage);
+            setError(errorMessage);
+            return { success: false, error: errorMessage };
         } finally {
             setLoading(false);
         }

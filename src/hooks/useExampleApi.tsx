@@ -16,7 +16,7 @@ export const useExampleApi = (): UseExampleApi => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [listExample, setListExample] = useState<UseExample[]>([]);
 
-    const apiUrl: string = "http://192.168.100.132:3000/tarea/tarea";
+    const apiUrl: string = "http://192.168.86.24:3000/tarea/tarea";
 
     const loadExample = async () => {
         setIsLoading(true);

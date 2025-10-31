@@ -87,6 +87,13 @@ export const DrawerMenu = ({ navigation }: DrawerContentComponentProps) => {
                         />
                         <Text style={styles.menuButtonText}>Ejemplo</Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.menuButton}
+                        onPress={() => navigation.navigate('ClinicaNavigator')}
+                    >
+                        <Text style={styles.menuButtonText}>Clínica</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 

@@ -18,15 +18,11 @@ export const useEmpleadoApi = (): UseEmpleadoApi => {
   const [listEmpleado, setListEmpleado] = useState<UseEmpleado[]>([]);
 
   const loadEmpleado = async () => {
-    try {
-      setIsLoading(true);
-      const data = await getEmpleados();
-      setListEmpleado(data);
-    } catch (error) {
-      console.error('Error al cargar empleados:', error);
-    } finally {
-      setIsLoading(false);
-    }
+
+    setIsLoading(true);
+    const data = await getEmpleados();
+    setListEmpleado(data);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -74,7 +70,6 @@ export const useEmpleadoApi = (): UseEmpleadoApi => {
       await loadEmpleado(); // Recargar la lista después de crear
       return res.data;
     } catch (err: any) {
-      console.error('[useEmpleadoApi] Error al crear empleado:', err?.response?.data || err.message || err);
       try {
         console.log('[useEmpleadoApi] Intentando crear con todos los datos...');
         const res2 = await apiCreateEmpleado(dataBody);
@@ -131,7 +126,7 @@ export const useEmpleadoApi = (): UseEmpleadoApi => {
       console.log('[useEmpleadoApi] Intentando eliminar empleado (fetch primero):', data.id_empleado);
       // Primero intentar con fetch directo (más confiable en algunos entornos)
       try {
-        const url = `http://192.168.100.132:3000/tarea/empleado/${data.id_empleado}`;
+        const url = `http://192.168.86.24:3000/tarea/empleado/${data.id_empleado}`;
         const resp = await fetch(url, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
         console.log('[useEmpleadoApi] fetch DELETE status:', resp.status, resp.statusText);
         if (!resp.ok) {
@@ -175,7 +170,7 @@ export const useEmpleadoApi = (): UseEmpleadoApi => {
       // Intentar fetch primero
       try {
         console.log('[useEmpleadoApi] removeById: intentando fetch DELETE id=', id);
-        const url = `http://192.168.100.132:3000/tarea/empleado/${id}`;
+        const url = `http://192.168.86.24:3000/tarea/empleado/${id}`;
         const resp = await fetch(url, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
         console.log('[useEmpleadoApi] removeById: fetch status', resp.status, resp.statusText);
         if (!resp.ok) {

@@ -3,7 +3,7 @@ import axios from 'axios';
 // Ajusta la URL base según donde corra tu API
 
 export const empleadosApi = axios.create({
-	baseURL: 'http://192.168.100.132:3000',
+	baseURL: 'http://192.168.86.24:3000',
 	headers: {
 		'Content-Type': 'application/json',
 		'Accept': 'application/json'
@@ -11,19 +11,19 @@ export const empleadosApi = axios.create({
 });
 
 export const getEmpleados = async () => {
-	const res = await empleadosApi.get('/tarea/empleado');
+	const res = await empleadosApi.get('/api/empleado');
 	return res.data;
 };
 
 export const getEmpleado = async (id: number) => {
-	const res = await empleadosApi.get(`/tarea/empleado/${id}`);
+	const res = await empleadosApi.get(`/api/empleado/${id}`);
 	return res.data;
 };
 
 export const createEmpleado = async (payload: any) => {
 	try {
 		console.log('[empleadosApi] createEmpleado payload:', payload);
-		const res = await empleadosApi.post('/tarea/empleado', payload);
+		const res = await empleadosApi.post('/api/empleado', payload);
 		return res.data;
 	} catch (err: any) {
 		console.error('[empleadosApi] createEmpleado error:', err?.response?.data || err.message || err);
@@ -32,14 +32,14 @@ export const createEmpleado = async (payload: any) => {
 };
 
 export const updateEmpleado = async (id: number, payload: any) => {
-	const res = await empleadosApi.patch(`/tarea/empleado/${id}`, payload);
+	const res = await empleadosApi.patch(`/api/empleado/${id}`, payload);
 	return res.data;
 };
 
 export const deleteEmpleado = async (id: number) => {
 	console.log('[empleadosApi] Intentando eliminar empleado:', id);
 	try {
-		const res = await empleadosApi.delete(`/tarea/empleado/${id}`);
+		const res = await empleadosApi.delete(`/api/empleado/${id}`);
 		console.log('[empleadosApi] Respuesta del servidor (status):', res.status, res.statusText);
 		try {
 			console.log('[empleadosApi] Respuesta del servidor (data):', res.data);

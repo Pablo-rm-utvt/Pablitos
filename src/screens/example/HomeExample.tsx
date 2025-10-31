@@ -55,16 +55,7 @@ export const HomeExample = () => {
                         />
                     </View>
                 )}
-                refreshControl={(
-                    <RefreshControl
-                        refreshing={isLoading}
-                        onRefresh={loadExample}
-                        colors={["pink", "violet", "black"]}
-                        progressBackgroundColor="black"
-                    />
-                )}
                 showsVerticalScrollIndicator={false}
-                numColumns={2}
                 renderItem={({ item }) => (
                     <ExampleCard example={item} />
                 )}
